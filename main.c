@@ -1,4 +1,4 @@
-#include "env.h"
+#include "main.h"
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -29,6 +29,7 @@ int main(int argc, char *argv[])
 		if (line_size == -1)
 			break;
 		line[line_size - 1] = '\0';
+		line = trim(line);
 		if (line[0] == '\0')
 			continue;
 		cargv[0] = line;

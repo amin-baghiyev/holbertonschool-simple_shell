@@ -23,7 +23,8 @@ int main(int argc, char *argv[])
 	(void)argc;
 	while (1)
 	{
-		printf("#cisfun$ ");
+		if (isatty(STDIN_FILENO))
+			printf("#cisfun$ ");
 		line_size = getline(&line, &size, stdin);
 		if (line_size == -1)
 			break;

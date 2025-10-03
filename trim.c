@@ -3,15 +3,14 @@
 
 char *trim(char *s)
 {
-	char *end;
+	size_t len = strlen(s), start = 0, end = len - 1;
 
-	while (*s == ' ' || *s == '\t' || *s == '\n')
-		s++;
-	if (*s == 0)
-		return (s);
-	end = s + strlen(s) - 1;
-	while (end > s && (*end == ' ' || *end == '\t' || *end == '\n'))
+	while (s[start] == ' ' || s[start] == '\t' || s[start] == '\n')
+		start++;
+	while (end > start && (s[end] == ' ' || s[end] == '\t' || s[end] == '\n'))
 		end--;
-	*(end + 1) = 0;
+	if (start > 0)
+		memmove(s, s + start, end - start + 1);
+	s[end - start + 1] = '\0';
 	return (s);
 }

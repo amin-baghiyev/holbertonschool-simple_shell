@@ -29,6 +29,8 @@ char *find_cmd(char *cmd)
 			path = environ[i] + 5;
 			break;
 		}
+	if (path == NULL || *path == '\0')
+		return (NULL);
 	path_cpy = strdup(path);
 	if (path_cpy == NULL)
 		return (NULL);

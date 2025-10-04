@@ -14,7 +14,7 @@
  */
 int main(int argc, char *argv[])
 {
-	char *line = NULL, *token, *cargv[64];
+	char *line = NULL, *token, *cargv[64], *cmd;
 	size_t size = 0;
 	ssize_t line_size;
 	pid_t pid;
@@ -36,10 +36,10 @@ int main(int argc, char *argv[])
 		token = strtok(line, " \t");
 		for (i = 0; token != NULL && i < 63; i++)
 			cargv[i] = token, token = strtok(NULL, " \t");
-		cargv[0] = find_cmd(cargv[0]);
+		cmd = cargv[0], cargv[0] = find_cmd(cargv[0]);
 		if (cargv[0] == NULL)
 		{
-			printf("%s: No such file or directory\n", argv[0]);
+			fprintf(stderr, "%s: not found\n", cmd);
 			continue;
 		}
 		pid = fork();

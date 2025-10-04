@@ -14,39 +14,43 @@
  */
 int main(int argc, char *argv[])
 {
-	char *line = NULL, *token;
+	char *line = NULL, *token, *cargv[64];
 	size_t size = 0;
 	ssize_t line_size;
 	pid_t pid;
 	int status, i;
-	char *cargv[3] = {NULL, NULL, NULL};
 
 	(void)argc;
 	while (1)
 	{
+		for (i = 0; i < 64; i++)
+			cargv[i] = NULL;
 		if (isatty(STDIN_FILENO))
 			printf("#cisfun$ ");
 		line_size = getline(&line, &size, stdin);
 		if (line_size == -1)
 			break;
-		line[line_size - 1] = '\0';
-		line = trim(line);
+		line[line_size - 1] = '\0', line = trim(line);
 		if (line[0] == '\0')
 			continue;
 		token = strtok(line, " \t");
-		for (i = 0; token != NULL && i < 2; i++)
+		for (i = 0; token != NULL && i < 63; i++)
 			cargv[i] = token, token = strtok(NULL, " \t");
+		cargv[0] = find_cmd(cargv[0]);
+		if (cargv[0] == NULL)
+		{
+			printf("%s: No such file or directory\n", argv[0]);
+			continue;
+		}
 		pid = fork();
 		if (pid == -1)
 			continue;
 		if (pid == 0)
-		{
-			if (execve(cargv[0], cargv, environ) == -1)
-				printf("%s: No such file or directory\n", argv[0]);
-			exit(-1);
-		}
+			execve(cargv[0], cargv, environ), exit(-1);
 		else
 			waitpid(pid, &status, 0);
+		if (cargv[0] != NULL)
+			free(cargv[0]);
 	}
 	free(line);
 	return (0);

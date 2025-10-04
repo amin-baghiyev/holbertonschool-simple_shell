@@ -1,6 +1,12 @@
 #include "main.h"
 #include <string.h>
 
+/**
+ * trim - Removes leading and trailing whitespace characters from a string
+ * @s: The string to be trimmed
+ *
+ * Return: A pointer to the trimmed string
+ */
 char *trim(char *s)
 {
 	size_t len = strlen(s), start = 0, end = len - 1;

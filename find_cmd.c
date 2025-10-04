@@ -16,22 +16,22 @@ char *find_cmd(char *cmd)
 	char *path, *tkn, *path_cpy, *cmd_path;
 	int i;
 
+	if (cmd[0] == '/')
+	{
+		if (access(cmd, X_OK) == 0)
+			return (strdup(cmd));
+		else
+			return (NULL);
+	}
 	for (i = 0; environ[i]; i++)
 		if (strncmp(environ[i], "PATH=", 5) == 0)
 		{
-			path = strdup(environ[i] + 5);
+			path = environ[i] + 5;
 			break;
 		}
 	path_cpy = strdup(path);
 	if (path_cpy == NULL)
 		return (NULL);
-	if (cmd[0] == '/')
-	{
-		if (access(cmd, X_OK) == 0)
-			return (cmd);
-		else
-			return (NULL);
-	}
 	for (tkn = strtok(path_cpy, ":"); tkn != NULL; tkn = strtok(NULL, ":"))
 	{
 		cmd_path = malloc(strlen(tkn) + strlen(cmd) + 2);

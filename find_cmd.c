@@ -16,7 +16,7 @@ char *find_cmd(char *cmd)
 	char *path, *tkn, *path_cpy, *cmd_path;
 	int i;
 
-	if (cmd[0] == '/')
+	if (cmd[0] == '/' || cmd[0] == '.')
 	{
 		if (access(cmd, X_OK) == 0)
 			return (strdup(cmd));

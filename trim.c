@@ -9,15 +9,20 @@
  */
 char *trim(char *s)
 {
-	char *end;
+	char *start = s, *end;
 
-	while (*s == ' ' || *s == '\t')
-		s++;
-	if (*s == '\0')
+	while (*start == ' ' || *start == '\t')
+		start++;
+	if (*start == '\0')
+	{
+		*s = '\0';
 		return (s);
-	end = s + strlen(s) - 1;
-	while (end > s && (*end == ' ' || *end == '\t'))
+	}
+	end = start + strlen(start) - 1;
+	while (end > start && (*end == ' ' || *end == '\t'))
 		end--;
 	*(end + 1) = '\0';
+	if (start != s)
+		memmove(s, start, end - start + 2);
 	return (s);
 }

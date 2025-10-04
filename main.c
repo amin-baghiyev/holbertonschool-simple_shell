@@ -7,10 +7,12 @@
 
 /**
  * main - Entry point
+ * @argc: count of argv
+ * @argv: arguments
  *
  * Return: Always 0 (Success)
  */
-int main(void)
+int main(int argc, char *argv[])
 {
 	char *line = NULL, *token, *cargv[64], *cmd;
 	size_t size = 0;
@@ -18,6 +20,7 @@ int main(void)
 	pid_t pid;
 	int status, i;
 
+	(void)argc;
 	while (1)
 	{
 		for (i = 0; i < 64; i++)
@@ -36,7 +39,7 @@ int main(void)
 		cmd = cargv[0], cargv[0] = find_cmd(cargv[0]);
 		if (cargv[0] == NULL)
 		{
-			fprintf(stderr, "%s: not found\n", cmd);
+			fprintf(stderr, "%s: 1: %s: not found\n", argv[0], cmd);
 			continue;
 		}
 		pid = fork();

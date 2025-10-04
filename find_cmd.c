@@ -13,8 +13,14 @@
  */
 char *find_cmd(char *cmd)
 {
-	char *path = getenv("PATH"), *tkn, *path_cpy, *cmd_path;
+	char *path, *tkn, *path_cpy, *cmd_path;
 
+	for (int i = 0; environ[i]; i++)
+		if (strncmp(environ[i], "PATH=", 5) == 0)
+		{
+			path = strdup(environ[i] + 5);
+			break;
+		}
 	path_cpy = strdup(path);
 	if (path_cpy == NULL)
 		return (NULL);

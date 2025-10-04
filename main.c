@@ -7,12 +7,10 @@
 
 /**
  * main - Entry point
- * @argc: count of argv
- * @argv: arguments
  *
  * Return: Always 0 (Success)
  */
-int main(int argc, char *argv[])
+int main(void)
 {
 	char *line = NULL, *token, *cargv[64], *cmd;
 	size_t size = 0;
@@ -20,7 +18,6 @@ int main(int argc, char *argv[])
 	pid_t pid;
 	int status, i;
 
-	(void)argc;
 	while (1)
 	{
 		for (i = 0; i < 64; i++)

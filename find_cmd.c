@@ -14,8 +14,9 @@
 char *find_cmd(char *cmd)
 {
 	char *path, *tkn, *path_cpy, *cmd_path;
+	int i;
 
-	for (int i = 0; environ[i]; i++)
+	for (i = 0; environ[i]; i++)
 		if (strncmp(environ[i], "PATH=", 5) == 0)
 		{
 			path = strdup(environ[i] + 5);
